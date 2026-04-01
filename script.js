@@ -61,7 +61,7 @@ taskList.appendChild(div);
 
 });
 
-updateProgress();
+/*updateProgress();*/
 
 let timeText = getTimeRemaining(task.dueDate);
 
@@ -118,13 +118,20 @@ function updateProgress(){
 
 let progress = document.getElementById("progress");
 
+// If progress bar doesn't exist on page, stop
 if(!progress) return;
+
+// Always get latest tasks from localStorage
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
 let completed = tasks.filter(task => task.completed).length;
 
 let percent = tasks.length ? (completed/tasks.length)*100 : 0;
 
 progress.style.width = percent + "%";
+
+// Show percentage text inside bar
+progress.textContent = Math.round(percent) + "%";
 
 }
 
@@ -200,3 +207,8 @@ return `${days}d ${hours}h remaining`;
 setInterval(() => { 
 displayTasks();
 }, 60000); // updates every minute
+
+document.addEventListener("DOMContentLoaded", () => {
+updateProgress();
+displayTasks(); // safe even if not on tasks page
+});

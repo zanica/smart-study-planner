@@ -221,10 +221,18 @@ margin-top:10px;
 }
 
 #progress{
+background:green;
 height:100%;
 width:0%;
+color:white;
+text-align:center;
+line-height:20px;
+font-size:12px;
+
+/*height:100%;
+width:0%;
 background:linear-gradient(to right, #1abc9c, #16a085);
-transition:0.5s;
+transition:0.5s;*/
 }
 
 /* Home Buttons */
