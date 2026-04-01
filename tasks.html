@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tasks</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+<h1>Smart Study Planner</h1>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="add-task.html">Add Task</a>
+<a href="tasks.html">Tasks</a>
+<a href="about.html">About</a>
+</nav>
+</header>
+
+<main>
+
+    <label>Filter Tasks:</label>
+<select id="filter" onchange="filterTasks()">
+<option value="all">All</option>
+<option value="high">High</option>
+<option value="medium">Medium</option>
+<option value="low">Low</option>
+<option value="completed">Completed</option>
+</select>
+
+<h2>Task List</h2>
+
+<div id="taskList"></div>
+
+</main>
+
+<script src="script.js"></script>
+
+</body>
+</html>

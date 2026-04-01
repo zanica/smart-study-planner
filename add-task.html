@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Add Task</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+<h1>Smart Study Planner</h1>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="add-task.html">Add Task</a>
+<a href="tasks.html">Tasks</a>
+<a href="about.html">About</a>
+</nav>
+</header>
+
+<main>
+
+<h2>Add New Task</h2>
+
+<form id="taskForm">
+
+<label>Task Title</label>
+<input type="text" id="title" required>
+
+<label>Description</label>
+<textarea id="description"></textarea>
+
+<label>Due Date</label>
+<input type="date" id="dueDate" required>
+
+<label>Priority</label>
+<select id="priority">
+<option value="Low">Low</option>
+<option value="Medium">Medium</option>
+<option value="High">High</option>
+</select>
+
+<button type="submit">Add Task</button>
+
+</form>
+
+</main>
+
+<script src="script.js"></script>
+
+</body>
+</html>
