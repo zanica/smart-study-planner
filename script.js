@@ -61,7 +61,7 @@ taskList.appendChild(div);
 
 });
 
-/*updateProgress();*/
+updateProgress();
 
 let timeText = getTimeRemaining(task.dueDate);
 
