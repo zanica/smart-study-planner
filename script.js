@@ -34,9 +34,11 @@ form.reset();
 
 function displayTasks(){
 
-let taskList = document.getElementById("taskList");
+const taskList = document.getElementById("taskList");
 
 if(!taskList) return;
+
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
 taskList.innerHTML="";
 
@@ -63,13 +65,15 @@ taskList.appendChild(div);
 
 updateProgress();
 
+}
+
 let timeText = getTimeRemaining(task.dueDate);
 
 if(timeText.includes("Overdue")){
 div.classList.add("overdue");
 }
 
-}
+
 
 div.innerHTML = `
 <h3>${task.title}</h3>
@@ -88,45 +92,48 @@ ${task.priority}
 
 function deleteTask(id){
 
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
 tasks = tasks.filter(task => task.id !== id);
 
 localStorage.setItem("tasks", JSON.stringify(tasks));
 
 displayTasks();
+updateProgress();
 
 }
 
 function completeTask(id){
 
-tasks = tasks.map(task => {
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
+tasks = tasks.map(task => {
 if(task.id === id){
 task.completed = !task.completed;
 }
-
 return task;
-
 });
 
 localStorage.setItem("tasks", JSON.stringify(tasks));
 
 displayTasks();
+updateProgress();
 
 }
 
 function updateProgress(){
 
-let progress = document.getElementById("progress");
+const progress = document.getElementById("progress");
 
 // If progress bar doesn't exist on page, stop
 if(!progress) return;
 
-// Always get latest tasks from localStorage
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+// Always fetch fresh data
+const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-let completed = tasks.filter(task => task.completed).length;
+const completed = tasks.filter(task => task.completed).length;
 
-let percent = tasks.length ? (completed/tasks.length)*100 : 0;
+const percent = tasks.length ? (completed/tasks.length)*100 : 0;
 
 progress.style.width = percent + "%";
 
@@ -209,6 +216,6 @@ displayTasks();
 }, 60000); // updates every minute
 
 document.addEventListener("DOMContentLoaded", () => {
-updateProgress();
 displayTasks(); // safe even if not on tasks page
+updateProgress();
 });
