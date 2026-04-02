@@ -32,6 +32,31 @@ form.reset();
 });
 }
 
+function updateProgress(){
+
+const progress = document.getElementById("progress");
+
+// If progress bar doesn't exist on page, stop
+if(!progress) return;
+
+// Always fetch fresh data
+const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+const completed = tasks.filter(task => task.completed).length;
+
+const percent = tasks.length ? (completed/tasks.length)*100 : 0;
+
+progress.style.width = percent + "%";
+
+// Show percentage text inside bar
+progress.textContent = Math.round(percent) + "%";
+
+//temporary debug
+console.log("Tasks:", tasks);
+console.log("Completed:", completed);
+console.log("Percent:", percent);
+}
+
 function displayTasks(){
 
 const taskList = document.getElementById("taskList");
@@ -129,26 +154,6 @@ updateProgress();
 
 }
 
-function updateProgress(){
-
-const progress = document.getElementById("progress");
-
-// If progress bar doesn't exist on page, stop
-if(!progress) return;
-
-// Always fetch fresh data
-const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
-const completed = tasks.filter(task => task.completed).length;
-
-const percent = tasks.length ? (completed/tasks.length)*100 : 0;
-
-progress.style.width = percent + "%";
-
-// Show percentage text inside bar
-progress.textContent = Math.round(percent) + "%";
-
-}
 
 displayTasks();
 updateProgress();
