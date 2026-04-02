@@ -35,7 +35,6 @@ form.reset();
 function displayTasks(){
 
 const taskList = document.getElementById("taskList");
-
 if(!taskList) return;
 
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
@@ -47,13 +46,23 @@ tasks.forEach(task => {
 let div = document.createElement("div");
 div.classList.add("task-card");
 
-if(task.completed) div.classList.add("completed");
+//countdown
+let timeText = getTimeRemaining(task.dueDate);
+
+//mark overdue inside loop
+if(timeText.includes("Overdue")){
+div.classList.add("overdue");
+}
+
+if(task.completed){
+     div.classList.add("completed");
+}
 
 div.innerHTML = `
 <h3>${task.title}</h3>
 <p>${task.description}</p>
 <p>Due: ${task.dueDate}</p>
-<p>Priority: ${task.priority}</p>
+<p class="countdown">${timeText}</p>
 
 <button onclick="completeTask(${task.id})">Complete</button>
 <button onclick="deleteTask(${task.id})">Delete</button>
@@ -64,7 +73,6 @@ taskList.appendChild(div);
 });
 
 updateProgress();
-
 }
 
 let timeText = getTimeRemaining(task.dueDate);
