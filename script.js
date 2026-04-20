@@ -54,8 +54,6 @@ alert("Task Added!");
 
 localStorage.setItem("tasks", JSON.stringify(tasks));
 
-alert("Task Added!");
-
 form.reset();
 
 });
