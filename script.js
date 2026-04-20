@@ -2,6 +2,8 @@
 // ADD TASK (Form Handling)
 // ===============================
 
+const editId = localStorage.getItem("editTaskId");
+
 const form = document.getElementById("taskForm");
 
 if(form){
@@ -24,7 +26,31 @@ completed: false
 };
 
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+if(editId){
+
+tasks = tasks.map(t => {
+if(t.id == editId){
+return {
+...t,
+title,
+description,
+dueDate,
+priority
+};
+}
+return t;
+});
+
+localStorage.removeItem("editTaskId");
+
+alert("Task Updated!");
+
+} else {
+
 tasks.push(task);
+alert("Task Added!");
+
+}
 
 localStorage.setItem("tasks", JSON.stringify(tasks));
 
@@ -35,6 +61,21 @@ form.reset();
 });
 }
 
+if(editId && form){
+
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+let taskToEdit = tasks.find(t => t.id == editId);
+
+if(taskToEdit){
+document.getElementById("title").value = taskToEdit.title;
+document.getElementById("description").value = taskToEdit.description;
+document.getElementById("dueDate").value = taskToEdit.dueDate;
+document.getElementById("priority").value = taskToEdit.priority;
+}
+
+}
+
+window.location.href = "tasks.html";
 
 // ===============================
 // UPDATE PROGRESS BAR
@@ -100,6 +141,7 @@ ${task.priority}
 <br>
 
 <button onclick="completeTask(${task.id})">✔ Complete</button>
+<button onclick="editTask(${task.id})">✏️ Edit</button>
 <button onclick="deleteTask(${task.id})">🗑 Delete</button>
 `;
 
@@ -216,6 +258,7 @@ ${task.priority}
 <br>
 
 <button onclick="completeTask(${task.id})">✔ Complete</button>
+<button onclick="editTask(${task.id})">✏️ Edit</button>
 <button onclick="deleteTask(${task.id})">🗑 Delete</button>
 `;
 
@@ -225,6 +268,14 @@ taskList.appendChild(div);
 
 }
 
+// ===============================
+// EDIT TASK
+// ===============================
+
+function editTask(id){
+localStorage.setItem("editTaskId", id);
+window.location.href = "add-task.html";
+}
 
 // ===============================
 // COUNTDOWN TIMER
