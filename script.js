@@ -75,8 +75,6 @@ document.getElementById("priority").value = taskToEdit.priority;
 
 }
 
-window.location.href = "tasks.html";
-
 // ===============================
 // UPDATE PROGRESS BAR
 // ===============================
