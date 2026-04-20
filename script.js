@@ -1,4 +1,6 @@
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+// ===============================
+// ADD TASK (Form Handling)
+// ===============================
 
 const form = document.getElementById("taskForm");
 
@@ -18,9 +20,10 @@ title,
 description,
 dueDate,
 priority,
-completed:false
+completed: false
 };
 
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 tasks.push(task);
 
 localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -32,30 +35,30 @@ form.reset();
 });
 }
 
+
+// ===============================
+// UPDATE PROGRESS BAR
+// ===============================
+
 function updateProgress(){
 
 const progress = document.getElementById("progress");
-
-// If progress bar doesn't exist on page, stop
 if(!progress) return;
 
-// Always fetch fresh data
-const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-const completed = tasks.filter(task => task.completed).length;
-
-const percent = tasks.length ? (completed/tasks.length)*100 : 0;
+let completed = tasks.filter(task => task.completed).length;
+let percent = tasks.length ? (completed / tasks.length) * 100 : 0;
 
 progress.style.width = percent + "%";
-
-// Show percentage text inside bar
 progress.textContent = Math.round(percent) + "%";
 
-//temporary debug
-console.log("Tasks:", tasks);
-console.log("Completed:", completed);
-console.log("Percent:", percent);
 }
+
+
+// ===============================
+// DISPLAY TASKS
+// ===============================
 
 function displayTasks(){
 
@@ -64,23 +67,24 @@ if(!taskList) return;
 
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-taskList.innerHTML="";
+taskList.innerHTML = "";
 
 tasks.forEach(task => {
 
 let div = document.createElement("div");
 div.classList.add("task-card");
 
-//countdown
+// Countdown
 let timeText = getTimeRemaining(task.dueDate);
 
-//mark overdue inside loop
+// Overdue styling
 if(timeText.includes("Overdue")){
 div.classList.add("overdue");
 }
 
+// Completed styling
 if(task.completed){
-     div.classList.add("completed");
+div.classList.add("completed");
 }
 
 div.innerHTML = `
@@ -88,30 +92,6 @@ div.innerHTML = `
 <p>${task.description}</p>
 <p>Due: ${task.dueDate}</p>
 <p class="countdown">${timeText}</p>
-
-<button onclick="completeTask(${task.id})">Complete</button>
-<button onclick="deleteTask(${task.id})">Delete</button>
-`;
-
-taskList.appendChild(div);
-
-});
-
-updateProgress();
-}
-
-let timeText = getTimeRemaining(task.dueDate);
-
-if(timeText.includes("Overdue")){
-div.classList.add("overdue");
-}
-
-
-
-div.innerHTML = `
-<h3>${task.title}</h3>
-<p>${task.description}</p>
-<p>Due: ${task.dueDate}</p>
 
 <span class="priority ${task.priority.toLowerCase()}">
 ${task.priority}
@@ -122,6 +102,18 @@ ${task.priority}
 <button onclick="completeTask(${task.id})">✔ Complete</button>
 <button onclick="deleteTask(${task.id})">🗑 Delete</button>
 `;
+
+taskList.appendChild(div);
+
+});
+
+updateProgress();
+}
+
+
+// ===============================
+// DELETE TASK
+// ===============================
 
 function deleteTask(id){
 
@@ -135,6 +127,11 @@ displayTasks();
 updateProgress();
 
 }
+
+
+// ===============================
+// COMPLETE TASK
+// ===============================
 
 function completeTask(id){
 
@@ -155,12 +152,18 @@ updateProgress();
 }
 
 
-displayTasks();
-updateProgress();
+// ===============================
+// FILTER TASKS
+// ===============================
 
 function filterTasks(){
 
-let filter = document.getElementById("filter").value;
+let filterElement = document.getElementById("filter");
+if(!filterElement) return;
+
+let filter = filterElement.value;
+
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
 let filtered = tasks;
 
@@ -173,9 +176,15 @@ filtered = tasks.filter(t => t.priority.toLowerCase() === filter);
 displayFilteredTasks(filtered);
 }
 
+
+// ===============================
+// DISPLAY FILTERED TASKS
+// ===============================
+
 function displayFilteredTasks(list){
 
-let taskList = document.getElementById("taskList");
+const taskList = document.getElementById("taskList");
+if(!taskList) return;
 
 taskList.innerHTML = "";
 
@@ -184,13 +193,21 @@ list.forEach(task => {
 let div = document.createElement("div");
 div.classList.add("task-card");
 
-if(task.completed) div.classList.add("completed");
+let timeText = getTimeRemaining(task.dueDate);
+
+if(timeText.includes("Overdue")){
+div.classList.add("overdue");
+}
+
+if(task.completed){
+div.classList.add("completed");
+}
 
 div.innerHTML = `
 <h3>${task.title}</h3>
 <p>${task.description}</p>
 <p>Due: ${task.dueDate}</p>
-<p class="countdown">${getTimeRemaining(task.dueDate)}</p>
+<p class="countdown">${timeText}</p>
 
 <span class="priority ${task.priority.toLowerCase()}">
 ${task.priority}
@@ -205,7 +222,14 @@ ${task.priority}
 taskList.appendChild(div);
 
 });
+
 }
+
+
+// ===============================
+// COUNTDOWN TIMER
+// ===============================
+
 function getTimeRemaining(dueDate){
 
 let now = new Date();
@@ -223,12 +247,22 @@ let hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
 return `${days}d ${hours}h remaining`;
 
 }
-//ensures countdown stays  accurate
-setInterval(() => { 
+
+
+// ===============================
+// AUTO UPDATE COUNTDOWN
+// ===============================
+
+setInterval(() => {
 displayTasks();
-}, 60000); // updates every minute
+}, 60000); // every minute
+
+
+// ===============================
+// INITIAL LOAD
+// ===============================
 
 document.addEventListener("DOMContentLoaded", () => {
-displayTasks(); // safe even if not on tasks page
+displayTasks();
 updateProgress();
 });
