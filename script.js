@@ -267,15 +267,6 @@ taskList.appendChild(div);
 }
 
 // ===============================
-// EDIT TASK
-// ===============================
-
-function editTask(id){
-localStorage.setItem("editTaskId", id);
-window.location.href = "add-task.html";
-}
-
-// ===============================
 // COUNTDOWN TIMER
 // ===============================
 
@@ -315,3 +306,12 @@ document.addEventListener("DOMContentLoaded", () => {
 displayTasks();
 updateProgress();
 });
+
+// ===============================
+// EDIT TASK
+// ===============================
+
+function editTask(id){
+localStorage.setItem("editTaskId", id);
+window.location.href = "add-task.html";
+}
