@@ -178,7 +178,7 @@ let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 tasks = tasks.map(task => {
 if(task.id === id){
     if(!task.completed){
-      celebrate(); // 🎉 trigger only when completing
+      celebrate(); // 🎉 trigger only when marking complete
     } 
 
 task.completed = !task.completed;
@@ -368,19 +368,22 @@ levelDisplay.textContent = level;
 
 function celebrate(){
 
-let emoji = document.createElement("div");
+for(let i = 0; i < 50; i++){
 
-emoji.textContent = "🎉";
-emoji.style.position = "fixed";
-emoji.style.top = "50%";
-emoji.style.left = "50%";
-emoji.style.fontSize = "50px";
-emoji.style.transform = "translate(-50%, -50%)";
+let confetti = document.createElement("div");
 
-document.body.appendChild(emoji);
+confetti.classList.add("confetti");
 
+confetti.style.left = Math.random() * 100 + "vw";
+confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
+
+document.body.appendChild(confetti);
+
+// remove after animation
 setTimeout(() => {
-emoji.remove();
-}, 800);
+confetti.remove();
+}, 3000);
+
+}
 
 }
