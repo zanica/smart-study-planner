@@ -177,6 +177,10 @@ let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
 tasks = tasks.map(task => {
 if(task.id === id){
+    if(!task.completed){
+      celebrate(); // 🎉 trigger only when completing
+    } 
+
 task.completed = !task.completed;
 }
 return task;
@@ -186,6 +190,8 @@ localStorage.setItem("tasks", JSON.stringify(tasks));
 
 displayTasks();
 updateProgress();
+updatePoints();
+updateLevel();
 
 }
 
@@ -303,6 +309,8 @@ displayTasks();
 document.addEventListener("DOMContentLoaded", () => {
 displayTasks();
 updateProgress();
+updatePoints();
+updateLevel();
 });
 
 // ===============================
@@ -312,4 +320,67 @@ updateProgress();
 function editTask(id){
 localStorage.setItem("editTaskId", id);
 window.location.href = "add-task.html";
+}
+
+// ===============================
+// UPDATE POINTS
+// ===============================
+
+function updatePoints(){
+
+let pointsDisplay = document.getElementById("points");
+if(!pointsDisplay) return;
+
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+let points = tasks.filter(t => t.completed).length * 10;
+
+pointsDisplay.textContent = points + " pts";
+
+localStorage.setItem("points", points);
+
+}
+
+// ===============================
+// LEVEL UPDATE 
+// ===============================
+
+function updateLevel(){
+
+let levelDisplay = document.getElementById("level");
+if(!levelDisplay) return;
+
+let points = parseInt(localStorage.getItem("points")) || 0;
+
+let level = "Beginner";
+
+if(points >= 100) level = "Intermediate";
+if(points >= 200) level = "Advanced";
+if(points >= 300) level = "Expert";
+
+levelDisplay.textContent = level;
+
+}
+
+// ===============================
+// CELEBRATE FUNCTION
+// ===============================
+
+function celebrate(){
+
+let emoji = document.createElement("div");
+
+emoji.textContent = "🎉";
+emoji.style.position = "fixed";
+emoji.style.top = "50%";
+emoji.style.left = "50%";
+emoji.style.fontSize = "50px";
+emoji.style.transform = "translate(-50%, -50%)";
+
+document.body.appendChild(emoji);
+
+setTimeout(() => {
+emoji.remove();
+}, 800);
+
 }
