@@ -1,6 +1,6 @@
-const completeSound = new Audio("sounds/complete.wav");
-const deleteSound = new Audio("sounds/delete.wav");
-const addSound = new Audio("sounds/add.wav");
+const completeSound = new Audio("sounds/complete.mp3");
+const deleteSound = new Audio("sounds/delete.mp3");
+const addSound = new Audio("sounds/add.mp3");
 
 // ===============================
 // ADD TASK (Form Handling)
