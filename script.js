@@ -1,3 +1,7 @@
+const completeSound = new Audio("sounds/complete.wav");
+const deleteSound = new Audio("sounds/delete.wav");
+const addSound = new Audio("sounds/add.wav");
+
 // ===============================
 // ADD TASK (Form Handling)
 // ===============================
@@ -53,6 +57,8 @@ alert("Task Added!");
 }
 
 localStorage.setItem("tasks", JSON.stringify(tasks));
+
+addSound.play(); //sound
 
 form.reset();
 
@@ -155,14 +161,16 @@ updateProgress();
 
 function deleteTask(id){
 
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  deleteSound.play(); // sound
 
-tasks = tasks.filter(task => task.id !== id);
+  let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-localStorage.setItem("tasks", JSON.stringify(tasks));
+  tasks = tasks.filter(task => task.id !== id);
 
-displayTasks();
-updateProgress();
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+
+  displayTasks();
+  updateProgress();
 
 }
 
@@ -180,6 +188,7 @@ if(task.id === id){
     if(!task.completed){
       celebrate(); // trigger only when marking complete
       updateStreak(); // update streak
+      completeSound.play(); // sound
     } 
 
 task.completed = !task.completed;
