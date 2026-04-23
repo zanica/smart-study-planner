@@ -2,6 +2,10 @@ const completeSound = new Audio("sounds/complete.mp3");
 const deleteSound = new Audio("sounds/delete.mp3");
 const addSound = new Audio("sounds/add.mp3");
 
+completeSound.volume = 0.5;
+deleteSound.volume = 0.5;
+addSound.volume = 0.5;
+
 // ===============================
 // ADD TASK (Form Handling)
 // ===============================
