@@ -188,16 +188,16 @@ function completeTask(id){
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
 tasks = tasks.map(task => {
-if(task.id === id){
+ if(task.id === id){
     if(!task.completed){
       celebrate(); // trigger only when marking complete
       updateStreak(); // update streak
       completeSound.play(); // sound
     } 
 
-task.completed = !task.completed;
-}
-return task;
+  task.completed = !task.completed;
+  }
+ return task;
 });
 
 localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -321,16 +321,16 @@ displayTasks();
 // ===============================
 
 document.addEventListener("DOMContentLoaded", () => {
-displayTasks();
-updateProgress();
-updatePoints();
-updateLevel();
+  displayTasks();
+  updateProgress();
+  updatePoints();
+  updateLevel();
 
 // load streak value
-let streakDisplay = document.getElementById("streak");
-if(streakDisplay){
-streakDisplay.textContent = (localStorage.getItem("streak") || 0) + " 🔥";
-}
+ const streakDisplay = document.getElementById("streak");
+ if(streakDisplay){
+    streakDisplay.textContent = (localStorage.getItem("streak") || 0) + " 🔥";
+  }
 });
 
 
@@ -339,8 +339,8 @@ streakDisplay.textContent = (localStorage.getItem("streak") || 0) + " 🔥";
 // ===============================
 
 function editTask(id){
-localStorage.setItem("editTaskId", id);
-window.location.href = "add-task.html";
+ localStorage.setItem("editTaskId", id);
+ window.location.href = "add-task.html";
 }
 
 // ===============================
@@ -349,16 +349,16 @@ window.location.href = "add-task.html";
 
 function updatePoints(){
 
-let pointsDisplay = document.getElementById("points");
-if(!pointsDisplay) return;
+ let pointsDisplay = document.getElementById("points");
+ if(!pointsDisplay) return;
 
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+ let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-let points = tasks.filter(t => t.completed).length * 10;
+ let points = tasks.filter(t => t.completed).length * 10;
 
-pointsDisplay.textContent = points + " pts";
+ pointsDisplay.textContent = points + " pts";
 
-localStorage.setItem("points", points);
+ localStorage.setItem("points", points);
 
 }
 
@@ -368,18 +368,18 @@ localStorage.setItem("points", points);
 
 function updateLevel(){
 
-let levelDisplay = document.getElementById("level");
-if(!levelDisplay) return;
+ let levelDisplay = document.getElementById("level");
+ if(!levelDisplay) return;
 
-let points = parseInt(localStorage.getItem("points")) || 0;
+ let points = parseInt(localStorage.getItem("points")) || 0;
 
-let level = "Beginner";
+ let level = "Beginner";
 
-if(points >= 100) level = "Intermediate";
-if(points >= 200) level = "Advanced";
-if(points >= 300) level = "Expert";
+ if(points >= 100) level = "Intermediate";
+ if(points >= 200) level = "Advanced";
+ if(points >= 300) level = "Expert";
 
-levelDisplay.textContent = level;
+ levelDisplay.textContent = level;
 
 }
 
@@ -402,7 +402,7 @@ document.body.appendChild(confetti);
 
 // remove after animation
 setTimeout(() => {
-confetti.remove();
+ confetti.remove();
 }, 3000);
 
 }
@@ -415,41 +415,34 @@ confetti.remove();
 
 function updateStreak(){
 
-let streakDisplay = document.getElementById("streak");
-if(!streakDisplay) return;
+const today = new Date().toDateString();
 
-let today = new Date().toDateString();
-
-let lastCompletedDate = localStorage.getItem("lastCompletedDate");
+let lastDate = localStorage.getItem("lastCompletedDate");
 let streak = parseInt(localStorage.getItem("streak")) || 0;
 
-// First completion ever
-if(!lastCompletedDate){
-streak = 1;
+// If already completed a task today → do nothing
+if(lastDate === today){
+ return;
 }
 
-// If completed today already → do nothing
-else if(lastCompletedDate === today){
-streak = streak;
-}
-
-// If yesterday → increase streak
-else{
+// Check if yesterday
 let yesterday = new Date();
 yesterday.setDate(yesterday.getDate() - 1);
 
-if(new Date(lastCompletedDate).toDateString() === yesterday.toDateString()){
-streak += 1;
-}else{
-streak = 1; // reset streak
-}
+if(lastDate === yesterday.toDateString()){
+ streak += 1;
+} else{
+   streak = 1; // reset if missed a day
 }
 
-// Save values
+// Save
 localStorage.setItem("streak", streak);
 localStorage.setItem("lastCompletedDate", today);
 
-// Display
+// Update UI
+const streakDisplay = document.getElementById("streak");
+if(streakDisplay){
 streakDisplay.textContent = streak + " 🔥";
+}
 
 }
