@@ -451,4 +451,8 @@ localStorage.setItem("lastCompletedDate", today);
 // display
 streakDisplay.textContent = streak + " 🔥";
 
+if(streak >= 3){
+ alert("🔥 You're on a " + streak + "-day streak!");
+}
+
 }
