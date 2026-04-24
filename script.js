@@ -189,7 +189,7 @@ let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
 tasks = tasks.map(task => {
  if(task.id === id){
-    if(!task.completed === false){
+    if(task.completed === false){
       celebrate(); // trigger only when marking complete
       updateStreak(); // update streak
       completeSound.play(); // sound
