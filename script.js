@@ -415,34 +415,40 @@ setTimeout(() => {
 
 function updateStreak(){
 
-const today = new Date().toDateString();
+const streakDisplay = document.getElementById("streak");
+if(!streakDisplay) return;
+
+let today = new Date();
+today.setHours(0,0,0,0); // normalize time
 
 let lastDate = localStorage.getItem("lastCompletedDate");
 let streak = parseInt(localStorage.getItem("streak")) || 0;
 
-// If already completed a task today → do nothing
-if(lastDate === today){
- return;
+if(lastDate){
+let last = new Date(lastDate);
+last.setHours(0,0,0,0);
+
+let diffDays = (today - last) / (1000 * 60 * 60 * 24);
+
+if(diffDays === 0){
+    // already completed today → no change
+}
+else if(diffDays === 1){
+    streak += 1; // continue streak
+}
+else{
+    streak = 1; // reset streak
 }
 
-// Check if yesterday
-let yesterday = new Date();
-yesterday.setDate(yesterday.getDate() - 1);
+}else{
+   streak = 1; // first time
+  }
 
-if(lastDate === yesterday.toDateString()){
- streak += 1;
-} else{
-   streak = 1; // reset if missed a day
-}
-
-// Save
+// save
 localStorage.setItem("streak", streak);
 localStorage.setItem("lastCompletedDate", today);
 
-// Update UI
-const streakDisplay = document.getElementById("streak");
-if(streakDisplay){
+// display
 streakDisplay.textContent = streak + " 🔥";
-}
 
 }
