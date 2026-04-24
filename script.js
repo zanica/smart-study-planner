@@ -189,7 +189,7 @@ let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
 tasks = tasks.map(task => {
  if(task.id === id){
-    if(!task.completed){
+    if(!task.completed === false){
       celebrate(); // trigger only when marking complete
       updateStreak(); // update streak
       completeSound.play(); // sound
@@ -327,7 +327,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateLevel();
 
 // load streak value
- const streakDisplay = document.getElementById("streak");
+ let streakDisplay = document.getElementById("streak");
  if(streakDisplay){
     streakDisplay.textContent = (localStorage.getItem("streak") || 0) + " 🔥";
   }
@@ -415,44 +415,31 @@ setTimeout(() => {
 
 function updateStreak(){
 
-const streakDisplay = document.getElementById("streak");
-if(!streakDisplay) return;
-
-let today = new Date();
-today.setHours(0,0,0,0); // normalize time
+let today = new Date().toDateString();
 
 let lastDate = localStorage.getItem("lastCompletedDate");
 let streak = parseInt(localStorage.getItem("streak")) || 0;
 
-if(lastDate){
-let last = new Date(lastDate);
-last.setHours(0,0,0,0);
-
-let diffDays = (today - last) / (1000 * 60 * 60 * 24);
-
-if(diffDays === 0){
-    // already completed today → no change
-}
-else if(diffDays === 1){
-    streak += 1; // continue streak
-}
-else{
-    streak = 1; // reset streak
+if(lastDate === today){
+return; // already counted today
 }
 
+let yesterday = new Date();
+yesterday.setDate(yesterday.getDate() - 1);
+
+if(lastDate === yesterday.toDateString()){
+streak += 1;
 }else{
-   streak = 1; // first time
-  }
+streak = 1;
+}
 
-// save
 localStorage.setItem("streak", streak);
 localStorage.setItem("lastCompletedDate", today);
 
-// display
+// update UI immediately
+let streakDisplay = document.getElementById("streak");
+if(streakDisplay){
 streakDisplay.textContent = streak + " 🔥";
-
-if(streak >= 3){
- alert("🔥 You're on a " + streak + "-day streak!");
 }
 
 }
