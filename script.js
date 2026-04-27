@@ -15,71 +15,71 @@ const editId = localStorage.getItem("editTaskId");
 const form = document.getElementById("taskForm");
 
 if(form){
-form.addEventListener("submit", function(e){
+ form.addEventListener("submit", function(e){
 
-e.preventDefault();
+   e.preventDefault();
 
-let title = document.getElementById("title").value;
-let description = document.getElementById("description").value;
-let dueDate = document.getElementById("dueDate").value;
-let priority = document.getElementById("priority").value;
+   let title = document.getElementById("title").value;
+   let description = document.getElementById("description").value;
+   let dueDate = document.getElementById("dueDate").value;
+   let priority = document.getElementById("priority").value;
 
-let task = {
-id: Date.now(),
-title,
-description,
-dueDate,
-priority,
-completed: false
-};
+   let task = {
+     id: Date.now(),
+     title,
+     description,
+     dueDate,
+     priority,
+     completed: false
+    };
 
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-if(editId){
+   let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+   if(editId){
 
-tasks = tasks.map(t => {
-if(t.id == editId){
-return {
-...t,
-title,
-description,
-dueDate,
-priority
-};
-}
-return t;
-});
+     tasks = tasks.map(t => {
+       if(t.id == editId){
+       return {
+         ...t,
+         title,
+         description,
+         dueDate,
+         priority
+        };
+      }
+    return t;
+    });
 
-localStorage.removeItem("editTaskId");
+   localStorage.removeItem("editTaskId");
 
-alert("Task Updated!");
+   alert("Task Updated!");
 
-} else {
+  } else {
 
-tasks.push(task);
-alert("Task Added!");
+     tasks.push(task);
+     alert("Task Added!");
 
-}
+    }
 
-localStorage.setItem("tasks", JSON.stringify(tasks));
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 
-addSound.play(); //sound
+  addSound.play(); //sound
 
-form.reset();
+  form.reset();
 
-});
+  });
 }
 
 if(editId && form){
 
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-let taskToEdit = tasks.find(t => t.id == editId);
+ let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+ let taskToEdit = tasks.find(t => t.id == editId);
 
-if(taskToEdit){
-document.getElementById("title").value = taskToEdit.title;
-document.getElementById("description").value = taskToEdit.description;
-document.getElementById("dueDate").value = taskToEdit.dueDate;
-document.getElementById("priority").value = taskToEdit.priority;
-}
+ if(taskToEdit){
+   document.getElementById("title").value = taskToEdit.title;
+   document.getElementById("description").value = taskToEdit.description;
+   document.getElementById("dueDate").value = taskToEdit.dueDate;
+   document.getElementById("priority").value = taskToEdit.priority;
+  }
 
 }
 
@@ -89,16 +89,16 @@ document.getElementById("priority").value = taskToEdit.priority;
 
 function updateProgress(){
 
-const progress = document.getElementById("progress");
-if(!progress) return;
+ const progress = document.getElementById("progress");
+ if(!progress) return;
 
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+ let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-let completed = tasks.filter(task => task.completed).length;
-let percent = tasks.length ? (completed / tasks.length) * 100 : 0;
+ let completed = tasks.filter(task => task.completed).length;
+ let percent = tasks.length ? (completed / tasks.length) * 100 : 0;
 
-progress.style.width = percent + "%";
-progress.textContent = Math.round(percent) + "%";
+ progress.style.width = percent + "%";
+ progress.textContent = Math.round(percent) + "%";
 
 }
 
@@ -109,53 +109,53 @@ progress.textContent = Math.round(percent) + "%";
 
 function displayTasks(){
 
-const taskList = document.getElementById("taskList");
-if(!taskList) return;
+ const taskList = document.getElementById("taskList");
+ if(!taskList) return;
 
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+ let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-taskList.innerHTML = "";
+ taskList.innerHTML = "";
 
-tasks.forEach(task => {
+ tasks.forEach(task => {
 
-let div = document.createElement("div");
-div.classList.add("task-card");
+   let div = document.createElement("div");
+   div.classList.add("task-card");
 
-// Countdown
-let timeText = getTimeRemaining(task.dueDate);
+   // Countdown
+   let timeText = getTimeRemaining(task.dueDate);
 
-// Overdue styling
-if(timeText.includes("Overdue")){
-div.classList.add("overdue");
-}
+   // Overdue styling
+   if(timeText.includes("Overdue")){
+     div.classList.add("overdue");
+    }
 
-// Completed styling
-if(task.completed){
-div.classList.add("completed");
-}
+   // Completed styling
+   if(task.completed){
+     div.classList.add("completed");
+    }
 
-div.innerHTML = `
-<h3>${task.title}</h3>
-<p>${task.description}</p>
-<p>Due: ${task.dueDate}</p>
-<p class="countdown">${timeText}</p>
+   div.innerHTML = `
+   <h3>${task.title}</h3>
+   <p>${task.description}</p>
+   <p>Due: ${task.dueDate}</p>
+   <p class="countdown">${timeText}</p>
 
-<span class="priority ${task.priority.toLowerCase()}">
-${task.priority}
-</span>
+   <span class="priority ${task.priority.toLowerCase()}">
+   ${task.priority}
+   </span>
 
-<br>
+   <br>
 
-<button onclick="completeTask(${task.id})">✔ Complete</button>
-<button onclick="editTask(${task.id})">✏️ Edit</button>
-<button onclick="deleteTask(${task.id})">🗑 Delete</button>
-`;
+   <button onclick="completeTask(${task.id})">✔ Complete</button>
+   <button onclick="editTask(${task.id})">✏️ Edit</button>
+   <button onclick="deleteTask(${task.id})">🗑 Delete</button>
+   `;
 
-taskList.appendChild(div);
+   taskList.appendChild(div);
 
-});
+  });
 
-updateProgress();
+ updateProgress();
 }
 
 
@@ -185,27 +185,27 @@ function deleteTask(id){
 
 function completeTask(id){
 
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+ let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-tasks = tasks.map(task => {
- if(task.id === id){
-    if(task.completed === false){
-      celebrate(); // trigger only when marking complete
-      updateStreak(); // update streak
-      completeSound.play(); // sound
-    } 
+ tasks = tasks.map(task => {
+   if(task.id === id){
+     if(task.completed === false){
+       celebrate(); // trigger only when marking complete
+       updateStreak(); // update streak
+       completeSound.play(); // sound
+      } 
 
-  task.completed = !task.completed;
-  }
- return task;
-});
+     task.completed = !task.completed;
+    }
+   return task;
+  });
 
-localStorage.setItem("tasks", JSON.stringify(tasks));
+ localStorage.setItem("tasks", JSON.stringify(tasks));
 
-displayTasks();
-updateProgress();
-updatePoints();
-updateLevel();
+ displayTasks();
+ updateProgress();
+ updatePoints();
+ updateLevel();
 
 }
 
@@ -216,22 +216,22 @@ updateLevel();
 
 function filterTasks(){
 
-let filterElement = document.getElementById("filter");
-if(!filterElement) return;
+ let filterElement = document.getElementById("filter");
+ if(!filterElement) return;
 
-let filter = filterElement.value;
+ let filter = filterElement.value;
 
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+ let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-let filtered = tasks;
+ let filtered = tasks;
 
-if(filter === "completed"){
-filtered = tasks.filter(t => t.completed);
-}else if(filter !== "all"){
-filtered = tasks.filter(t => t.priority.toLowerCase() === filter);
-}
+ if(filter === "completed"){
+   filtered = tasks.filter(t => t.completed);
+  }else if(filter !== "all"){
+   filtered = tasks.filter(t => t.priority.toLowerCase() === filter);
+  }
 
-displayFilteredTasks(filtered);
+ displayFilteredTasks(filtered);
 }
 
 
@@ -241,46 +241,46 @@ displayFilteredTasks(filtered);
 
 function displayFilteredTasks(list){
 
-const taskList = document.getElementById("taskList");
-if(!taskList) return;
+ const taskList = document.getElementById("taskList");
+ if(!taskList) return;
 
-taskList.innerHTML = "";
+ taskList.innerHTML = "";
 
-list.forEach(task => {
+ list.forEach(task => {
 
-let div = document.createElement("div");
-div.classList.add("task-card");
+   let div = document.createElement("div");
+   div.classList.add("task-card");
 
-let timeText = getTimeRemaining(task.dueDate);
+   let timeText = getTimeRemaining(task.dueDate);
 
-if(timeText.includes("Overdue")){
-div.classList.add("overdue");
-}
+   if(timeText.includes("Overdue")){
+     div.classList.add("overdue");
+    }
 
-if(task.completed){
-div.classList.add("completed");
-}
+   if(task.completed){
+     div.classList.add("completed");
+    }
 
-div.innerHTML = `
-<h3>${task.title}</h3>
-<p>${task.description}</p>
-<p>Due: ${task.dueDate}</p>
-<p class="countdown">${timeText}</p>
+   div.innerHTML = `
+   <h3>${task.title}</h3>
+   <p>${task.description}</p>
+   <p>Due: ${task.dueDate}</p>
+   <p class="countdown">${timeText}</p>
 
-<span class="priority ${task.priority.toLowerCase()}">
-${task.priority}
-</span>
+   <span class="priority ${task.priority.toLowerCase()}">
+   ${task.priority}
+   </span>
 
-<br>
+   <br>
 
-<button onclick="completeTask(${task.id})">✔ Complete</button>
-<button onclick="editTask(${task.id})">✏️ Edit</button>
-<button onclick="deleteTask(${task.id})">🗑 Delete</button>
-`;
+   <button onclick="completeTask(${task.id})">✔ Complete</button>
+   <button onclick="editTask(${task.id})">✏️ Edit</button>
+   <button onclick="deleteTask(${task.id})">🗑 Delete</button>
+   `;
 
-taskList.appendChild(div);
+   taskList.appendChild(div);
 
-});
+  });
 
 }
 
@@ -290,19 +290,19 @@ taskList.appendChild(div);
 
 function getTimeRemaining(dueDate){
 
-let now = new Date();
-let due = new Date(dueDate);
+ let now = new Date();
+ let due = new Date(dueDate);
 
-let diff = due - now;
+ let diff = due - now;
 
-if(diff <= 0){
-return "⚠️ Overdue";
-}
+ if(diff <= 0){
+   return "⚠️ Overdue";
+  }
 
-let days = Math.floor(diff / (1000 * 60 * 60 * 24));
-let hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+ let days = Math.floor(diff / (1000 * 60 * 60 * 24));
+ let hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
 
-return `${days}d ${hours}h remaining`;
+ return `${days}d ${hours}h remaining`;
 
 }
 
@@ -312,7 +312,7 @@ return `${days}d ${hours}h remaining`;
 // ===============================
 
 setInterval(() => {
-displayTasks();
+ displayTasks();
 }, 60000); // every minute
 
 
@@ -321,10 +321,10 @@ displayTasks();
 // ===============================
 
 document.addEventListener("DOMContentLoaded", () => {
-  displayTasks();
-  updateProgress();
-  updatePoints();
-  updateLevel();
+ displayTasks();
+ updateProgress();
+ updatePoints();
+ updateLevel();
 
 // load streak value
  let streakDisplay = document.getElementById("streak");
@@ -375,9 +375,9 @@ function updateLevel(){
 
  let level = "Beginner";
 
- if(points >= 100) level = "Intermediate";
- if(points >= 200) level = "Advanced";
- if(points >= 300) level = "Expert";
+ if(points >= 50) level = "Intermediate";
+ if(points >= 100) level = "Advanced";
+ if(points >= 200) level = "Expert";
 
  levelDisplay.textContent = level;
 
@@ -389,23 +389,23 @@ function updateLevel(){
 
 function celebrate(){
 
-for(let i = 0; i < 50; i++){
+ for(let i = 0; i < 50; i++){
 
-let confetti = document.createElement("div");
+   let confetti = document.createElement("div");
 
-confetti.classList.add("confetti");
+   confetti.classList.add("confetti");
 
-confetti.style.left = Math.random() * 100 + "vw";
-confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
+   confetti.style.left = Math.random() * 100 + "vw";
+   confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
 
-document.body.appendChild(confetti);
+   document.body.appendChild(confetti);
 
-// remove after animation
-setTimeout(() => {
- confetti.remove();
-}, 3000);
+   // remove after animation
+   setTimeout(() => {
+     confetti.remove();
+    }, 3000);
 
-}
+  }
 
 }
 
@@ -415,31 +415,31 @@ setTimeout(() => {
 
 function updateStreak(){
 
-let today = new Date().toDateString();
+ let today = new Date().toDateString();
 
-let lastDate = localStorage.getItem("lastCompletedDate");
-let streak = parseInt(localStorage.getItem("streak")) || 0;
+ let lastDate = localStorage.getItem("lastCompletedDate");
+ let streak = parseInt(localStorage.getItem("streak")) || 0;
 
-if(lastDate === today){
-return; // already counted today
-}
+ if(lastDate === today){
+   return; // already counted today
+  }
 
-let yesterday = new Date();
-yesterday.setDate(yesterday.getDate() - 1);
+ let yesterday = new Date();
+ yesterday.setDate(yesterday.getDate() - 1);
 
-if(lastDate === yesterday.toDateString()){
-streak += 1;
-}else{
-streak = 1;
-}
+ if(lastDate === yesterday.toDateString()){
+   streak += 1;
+  }else{
+    streak = 1;
+  }
 
-localStorage.setItem("streak", streak);
-localStorage.setItem("lastCompletedDate", today);
+ localStorage.setItem("streak", streak);
+ localStorage.setItem("lastCompletedDate", today);
 
-// update UI immediately
-let streakDisplay = document.getElementById("streak");
-if(streakDisplay){
-streakDisplay.textContent = streak + " 🔥";
-}
+ // update UI immediately
+ let streakDisplay = document.getElementById("streak");
+ if(streakDisplay){
+   streakDisplay.textContent = streak + " 🔥";
+  }
 
 }
