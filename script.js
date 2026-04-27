@@ -331,6 +331,8 @@ document.addEventListener("DOMContentLoaded", () => {
  if(streakDisplay){
     streakDisplay.textContent = (localStorage.getItem("streak") || 0) + " 🔥";
   }
+
+  loadQuote();
 });
 
 
@@ -443,3 +445,30 @@ function updateStreak(){
   }
 
 }
+
+// ===============================
+// QUOTES
+// ===============================
+
+function loadQuote(){
+
+const quoteElement = document.getElementById("quote");
+if(!quoteElement) return;
+
+const quotes = [
+"✨ Small steps every day lead to big results.",
+"🔥 Stay consistent, not perfect.",
+"📘 Your future self will thank you.",
+"🚀 Progress, not procrastination.",
+"💡 Focus on the goal, not the obstacle.",
+"🏆 Discipline beats motivation.",
+"⏳ Start now, not later."
+];
+
+const randomIndex = Math.floor(Math.random() * quotes.length);
+
+quoteElement.textContent = quotes[randomIndex];
+
+}
+
+setInterval(loadQuote, 10000); // change every 10 seconds
