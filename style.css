@@ -52,10 +52,12 @@ cursor:pointer;
 background:#3b82f6;
 color:white;
 margin-top:10px;
+transition: all 0.2s ease;
 }
 
 button:hover, .btn:hover{
 opacity:0.9;
+transform: scale(1.05);
 }
 
 /* FORM */
@@ -136,6 +138,8 @@ color:white;
 text-align:center;
 line-height:25px;
 font-size:12px;
+/* animation */
+transition: width 0.6s ease;
 }
 
 /* DASHBOARD BUTTONS */
@@ -172,6 +176,13 @@ animation: fall linear forwards;
 z-index: 9999;
 }
 
+@keyframes fall{
+to{
+transform: translateY(100vh) rotate(720deg);
+opacity: 0;
+}
+}
+
 /* random colors */
 .confetti:nth-child(odd){
 background-color: #3b82f6;
@@ -192,6 +203,7 @@ opacity: 0;
 }
 }
 
+/*QUOTES*/
 .quote-box{
 margin-top:40px;
 padding:15px;
@@ -204,4 +216,50 @@ font-style:italic;
 
 .quote-box p{
 margin:0;
+}
+
+/*QUOTE ANIMATIONS */
+.quote-box{
+margin-top:40px;
+padding:15px;
+background:#e0f2fe;
+border-left:5px solid #3b82f6;
+border-radius:8px;
+text-align:center;
+font-style:italic;
+
+/* animation */
+opacity:0;
+animation: fadeIn 1.5s ease forwards;
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(10px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+/*TASK CARD ANIMATION*/
+.task-card{
+background:white;
+padding:20px;
+margin-bottom:15px;
+border-radius:10px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+
+opacity:0;
+transform:translateY(20px);
+animation: slideUp 0.5s ease forwards;
+}
+
+@keyframes slideUp{
+to{
+opacity:1;
+transform:translateY(0);
+}
 }

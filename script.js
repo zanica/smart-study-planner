@@ -116,10 +116,13 @@ function displayTasks(){
 
  taskList.innerHTML = "";
 
- tasks.forEach(task => {
+ tasks.forEach((task, index) => {
 
    let div = document.createElement("div");
    div.classList.add("task-card");
+
+   // stagger delay
+   div.style.animationDelay = (index * 0.1) + "s";
 
    // Countdown
    let timeText = getTimeRemaining(task.dueDate);
