@@ -120,12 +120,11 @@ transform:translateY(-3px);
 
 /* COMPLETED TASK */
 .completed{
-    opacity:0.5;
-    text-decoration:line-through;
+opacity:0.5;
 }
 
 .completed .task-content{
-    text-decoration: line-through;
+text-decoration: line-through;
 }
 
 /* OVERDUE */
