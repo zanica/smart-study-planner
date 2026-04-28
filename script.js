@@ -121,6 +121,11 @@ function displayTasks(){
    let div = document.createElement("div");
    div.classList.add("task-card");
 
+   // trigger animation AFTER creation
+   setTimeout(() => {
+   div.classList.add("show");
+  }, 10);
+
    // stagger delay
    div.style.animationDelay = (index * 0.1) + "s";
 

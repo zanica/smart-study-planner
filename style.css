@@ -84,10 +84,18 @@ padding:20px;
 margin-bottom:15px;
 border-radius:10px;
 box-shadow:0 2px 8px rgba(0,0,0,0.1);
-/*transition:0.2s;
-opacity:0;*/
+opacity:0;
 transform:translateY(20px);
-animation: slideUp 0.5s ease forwards;
+transition: all 0.4s ease;
+/*transition:0.2s;
+opacity:0;
+transform:translateY(20px);
+animation: slideUp 0.5s ease forwards;*/
+}
+
+.task-card.show{
+opacity:1;
+transform:translateY(0);
 }
 
 @keyframes slideUp{
@@ -101,13 +109,18 @@ animation: slideUp 0.5s ease forwards;
 }
 }
 
+.task-card button{
+margin-right:5px;
+margin-top:10px;
+}
+
 .task-card:hover{
 transform:translateY(-3px);
 }
 
 /* COMPLETED TASK */
 .completed{
-    opacity:0.6;
+    opacity:0.5;
     text-decoration:line-through;
 }
 
@@ -118,6 +131,22 @@ transform:translateY(-3px);
 /* OVERDUE */
 .overdue{
 border-left:5px solid red;
+padding-left: 10px;
+}
+
+.task-card.overdue{
+position:relative;
+}
+
+.task-card.overdue::before{
+content:"";
+position:absolute;
+left:0;
+top:0;
+height:100%;
+width:5px;
+background:red;
+border-radius:10px 0 0 10px;
 }
 
 /* PRIORITY COLORS */
