@@ -84,16 +84,20 @@ padding:20px;
 margin-bottom:15px;
 border-radius:10px;
 box-shadow:0 2px 8px rgba(0,0,0,0.1);
-transition:0.2s;
-opacity:0;
+/*transition:0.2s;
+opacity:0;*/
 transform:translateY(20px);
 animation: slideUp 0.5s ease forwards;
 }
 
 @keyframes slideUp{
-to{
-opacity:0.6;
-transform:translateY(0);
+    from{
+        opacity:0;
+        transform:translate(20px)
+    }
+     to{
+       opacity:1;
+       transform:translateY(0);
 }
 }
 
@@ -103,8 +107,12 @@ transform:translateY(-3px);
 
 /* COMPLETED TASK */
 .completed{
-text-decoration:line-through;
-opacity:0.6;
+    opacity:0.6;
+    text-decoration:line-through;
+}
+
+.completed .task-content{
+    text-decoration: line-through;
 }
 
 /* OVERDUE */
