@@ -152,6 +152,7 @@ function displayTasks(){
    <span class="priority ${task.priority.toLowerCase()}">
    ${task.priority}
    </span>
+   </div>
 
    <br>
 
