@@ -53,6 +53,7 @@ background:#3b82f6;
 color:white;
 margin-top:10px;
 transition: all 0.2s ease;
+text-decoration: none;
 }
 
 button:hover, .btn:hover{
@@ -94,7 +95,7 @@ animation: slideUp 0.5s ease forwards;*/
 }
 
 .task-card.show{
-opacity:1;
+opacity:0;
 transform:translateY(0);
 }
 
