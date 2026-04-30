@@ -103,7 +103,7 @@ opacity:0;
 transform:translateY(0);
 }
 
-/*@keyframes slideUp{
+@keyframes slideUp{
     from{
         opacity:0;
         transform:translate(20px)
@@ -112,7 +112,7 @@ transform:translateY(0);
        opacity:0.5;
        transform:translateY(0);
 }
-}*/
+}
 
 .task-card button{
 margin-right:5px;
