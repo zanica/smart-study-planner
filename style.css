@@ -57,8 +57,12 @@ text-decoration: none;
 }
 
 button:hover, .btn:hover{
-opacity:0.9;
-transform: scale(1.05);
+    opacity:0.9;
+    transform: scale(1.05);
+}
+
+.btn a{
+    text-decoration: none;
 }
 
 /* FORM */
