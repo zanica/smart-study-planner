@@ -89,29 +89,14 @@ padding:20px;
 margin-bottom:15px;
 border-radius:10px;
 box-shadow:0 2px 8px rgba(0,0,0,0.1);
-opacity:0;
+
 transform:translateY(20px);
 transition: all 0.4s ease;
-/*transition:0.2s;
-opacity:0;
-transform:translateY(20px);
-animation: slideUp 0.5s ease forwards;*/
 }
 
 .task-card.show{
 opacity:1;
 transform:translateY(0);
-}
-
-@keyframes slideUp{
-    from{
-        opacity:0;
-        transform:translate(20px)
-    }
-     to{
-       opacity:0.5;
-       transform:translateY(0);
-}
 }
 
 .task-card button{
