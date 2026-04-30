@@ -99,7 +99,7 @@ animation: slideUp 0.5s ease forwards;*/
 }
 
 .task-card.show{
-opacity:1;
+opacity:0;
 transform:translateY(0);
 }
 
