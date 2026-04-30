@@ -272,6 +272,7 @@ function displayFilteredTasks(list){
     }
 
    div.innerHTML = `
+   <div class="task-content">
    <h3>${task.title}</h3>
    <p>${task.description}</p>
    <p>Due: ${task.dueDate}</p>
@@ -280,6 +281,7 @@ function displayFilteredTasks(list){
    <span class="priority ${task.priority.toLowerCase()}">
    ${task.priority}
    </span>
+ </div>
 
    <br>
 
